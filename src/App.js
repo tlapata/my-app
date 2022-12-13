@@ -4,7 +4,7 @@ import Coin from './components/coin/coin';
 import AccountBalance from './components/accountbalance/accountbalance'
 
 let sum = 0;
-for(let num of [1,2,3,4,5]) {
+for(let num of [1,2,3,4,50]) {
   sum += num;
 }
 
