@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logo from '../../logo.svg';
+import logo from './logo.svg';
 
 let sum = 0;
 for(let num of [1,2,3,4,5]) {
