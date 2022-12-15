@@ -1,51 +1,71 @@
-import logo from './logo.svg';
 import './App.css';
-import Coin from './components/coin/coin';
+import React from 'react';
+import Header from './components/header/header';
 import AccountBalance from './components/accountbalance/accountbalance'
+import CoinList from './components/CoinList/CoinList';
 
-let sum = 0;
-for(let num of [1,2,3,4,50]) {
-  sum += num;
-}
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      balance: 10000,
+      coinData: [
+        {
+          name: 'Bitcoin',
+          ticker: 'BTC',
+          price: 16999.01
+        },
+        {
+          name: 'Etherium',
+          ticker: 'ETH',
+          price: 1201.99
+        },
+        {
+          name: 'Tether',
+          ticker: 'USDT',
+          price: 1.0
+        },
+        {
+          name: 'Ripple',
+          ticker: 'XRP',
+          price: 0.2
+        },
+        {
+          name: 'Bitcoin Cash',
+          ticker: 'BTCC',
+          price: 1531.2
+        }
+        /*
+        <Coin name="Bitcoin" ticker="BTC" price={16999.01} />
+        <Coin name="Etherium" ticker="ETH" price={1201.99} />
+        <Coin name="Tether" ticker="USDT" price={1.0} />
+        <Coin name="Ripple" ticker="XRP" price={0.2} />
+        */
+      ]
+    }
+  }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>
-          Coin Exchange {sum}
-        </h1>
+  render(){
+    return (
+      <div className="App">
+        <Header />
+        <div className="App-body">
 
-        <AccountBalance amount={10000} />
+          <AccountBalance amount={this.state.balance} />
+          <CoinList coinData={this.state.coinData} />
 
-        <table className='coin-table'>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Ticker</th>
-              <th>Price</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <Coin name="Bitcoin" ticker="BTC" price={16999.01} />
-            <Coin name="Etherium" ticker="ETH" price={1201.99} />
-            <Coin name="Tether" ticker="USDT" price={1.0} />
-            <Coin name="Ripple" ticker="XRP" price={0.2} />
-          </tbody>
-        </table>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;

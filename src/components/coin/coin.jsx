@@ -6,7 +6,7 @@ export default class Coin extends Component {
   constructor(props){
     super(props);
     this.state = {
-      price: this.props.price + 1000
+      price: this.props.price + 100
     }
     this.handleClick = this.handleClick.bind(this);
   }
