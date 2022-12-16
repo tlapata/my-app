@@ -5,9 +5,13 @@ import PropTypes from 'prop-types';
 export default class Coin extends Component {
   constructor(props){
     super(props);
+
+    /*
     this.state = {
       price: this.props.price + 100
     }
+    */
+
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -35,13 +39,16 @@ export default class Coin extends Component {
     //prevent default event
     event.preventDefault();
 
+    this.props.handleRefresh(this.props.ticker);
+
+    /*
     const ramdomPercentage = 0.995 + Math.random() * 0.01;
     this.setState(function(oldState){
       return{
         price: oldState.price * ramdomPercentage
       }
     });
-
+    */
   }
 
   render() {
@@ -49,7 +56,7 @@ export default class Coin extends Component {
         <tr className='coin-row'>
           <td>{this.props.name}</td>
           <td>{this.props.ticker}</td>
-          <td>${this.state.price}</td>
+          <td>${this.props.price}</td>
           <td>
             <form action='' method='post'>
               <button onClick={this.handleClick}>Refresh</button>

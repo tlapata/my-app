@@ -43,7 +43,26 @@ class App extends React.Component {
         */
       ]
     }
+
+    this.handleRefresh = this.handleRefresh.bind(this);
   }
+
+handleRefresh(valueChangeticker){
+  const newCoinData = this.state.coinData.map( function( {ticker, name, price} ) {
+    let newPrice = price;
+    if ( valueChangeticker === ticker ){
+      const ramdomPercentage = 0.995 + Math.random() * 0.01;
+      newPrice = newPrice * ramdomPercentage;
+    }
+    return{
+      ticker,
+      name,
+      price: newPrice
+    }
+  });
+  
+  this.setState({ coinData: newCoinData })
+}
 
   render(){
     return (
@@ -52,7 +71,7 @@ class App extends React.Component {
         <div className="App-body">
 
           <AccountBalance amount={this.state.balance} />
-          <CoinList coinData={this.state.coinData} />
+          <CoinList coinData={this.state.coinData} handleRefresh={this.handleRefresh} />
 
           <a
             className="App-link"
