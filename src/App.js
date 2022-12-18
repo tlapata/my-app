@@ -70,7 +70,7 @@ class App extends React.Component {
     const coinIds = response.data.slice(0, COIN_COUNT).map(coin => coin.id);
 
     // get the prices
-    const tickerURL = 'https://api.coinpaprika.com/v1/tickers';
+    const tickerURL = 'https://api.coinpaprika.com/v1/tickers/';
     const promises = coinIds.map( id => axios.get(tickerURL + id) );
     const coinData = await Promise.all(promises);
     const coinPriceData = coinData.map(function(response){
@@ -94,6 +94,7 @@ class App extends React.Component {
   */
 
   // updating price by clicking the button
+  /* random changes
   handleRefresh = (valueChangeticker) => {
     const newCoinData = this.state.coinData.map( function( {ticker, name, price, balance} ) {
       let newPrice = price;
@@ -107,6 +108,22 @@ class App extends React.Component {
         price: newPrice,
         balance
       }
+    });
+    
+    this.setState({ coinData: newCoinData })
+  }
+  */
+  handleRefresh = async (valueChangeId) => {
+    const tickerURL = `https://api.coinpaprika.com/v1/tickers/${valueChangeId}`;
+    const response = await axios.get(tickerURL);
+    //debugger;
+    const newPrice = response.data.quotes['USD'].price;
+    const newCoinData = this.state.coinData.map( function(values) {
+      let newValues = {...values};
+      if( valueChangeId === values.key ){
+        newValues.price = newPrice;
+      }
+      return newValues;
     });
     
     this.setState({ coinData: newCoinData })
