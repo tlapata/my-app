@@ -30,9 +30,11 @@ export default class CoinList extends Component {
             )
           }
           {
+            /*
             this.props.coinData.map( value => 
               <Coin key={value.ticker} {...value} />
             )
+            */
           }
         </tbody>
       </table>  

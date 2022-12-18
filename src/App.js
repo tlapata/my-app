@@ -3,12 +3,17 @@ import React from 'react';
 import Header from './components/header/header';
 import AccountBalance from './components/accountbalance/accountbalance'
 import CoinList from './components/CoinList/CoinList';
+import axios from 'axios';
+
+const COIN_COUNT = 10;
 
 class App extends React.Component {
   state = {
     balance: 10000,
     showBalance: true,
     coinData: [
+      
+      /*
       {
         name: 'Bitcoin',
         ticker: 'BTC',
@@ -39,6 +44,7 @@ class App extends React.Component {
         balance: 0.2,
         price: 1531.2
       }
+      */
       /*
       <Coin name="Bitcoin" ticker="BTC" price={16999.01} />
       <Coin name="Etherium" ticker="ETH" price={1201.99} />
@@ -48,6 +54,46 @@ class App extends React.Component {
     ]
   }
 
+  componentDidMount = async () => {
+    const response = await axios.get('https://api.coinpaprika.com/v1/coins');
+    /*
+    let coinData = response.data.slice(0, COIN_COUNT).map(function(coin){
+      return{
+        key:      coin.id,
+        name:     coin.name,
+        ticker:   coin.symbol,
+        balance:  0,
+        price:    0
+      };
+    });
+    */
+    const coinIds = response.data.slice(0, COIN_COUNT).map(coin => coin.id);
+
+    // get the prices
+    const tickerURL = 'https://api.coinpaprika.com/v1/tickers';
+    const promises = coinIds.map( id => axios.get(tickerURL + id) );
+    const coinData = await Promise.all(promises);
+    const coinPriceData = coinData.map(function(response){
+      const coin = response.data;
+      return{
+        key:      coin.id,
+        name:     coin.name,
+        ticker:   coin.symbol,
+        balance:  0,
+        price:    coin.quotes['USD'].price
+      };
+    });
+
+    this.setState({ coinData: coinPriceData });
+    }
+
+  /*
+  componentDidUpdate = () => {
+    console.log('component did update');
+  }
+  */
+
+  // updating price by clicking the button
   handleRefresh = (valueChangeticker) => {
     const newCoinData = this.state.coinData.map( function( {ticker, name, price, balance} ) {
       let newPrice = price;
