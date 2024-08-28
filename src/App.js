@@ -102,15 +102,6 @@ function App (props) {
           coinData={coinData} 
           showBalance={showBalance} 
           handleRefresh={handleRefresh} />
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React with docs
-        </a>
       </div>
     </div>
   );
